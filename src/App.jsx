@@ -7,6 +7,7 @@ import fetchRandomQuote from "./api"
 
 function App() {
   const [quote, setQuoto] = useState(null);
+  const [refreshFlag, setRefreshFlag]  = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -19,7 +20,7 @@ function App() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [refreshFlag]);
 
   return (
     <>
@@ -37,6 +38,7 @@ function App() {
           <button
             className="bg-black text-white hover:bg-gray-700 flex mx-auto rounded-xl py-4 px-8"
             type="button"
+            onClick={() => setRefreshFlag(!refreshFlag)}
           >
             <svg
               className="w-6 h-6 mr-2 fill-white"
