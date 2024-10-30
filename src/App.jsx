@@ -1,10 +1,25 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import fetchRandomQuote from "./api"
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [quote, setQuoto] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    fetchRandomQuote().then((quote) => {
+      if (active) {
+        setQuoto(quote);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <>
@@ -43,12 +58,12 @@ function App() {
             </div>
             
             <p className="text-center text-xl text-gray-200">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Et vero
-              libero ut earum, totam ipsum, velit eos nostrum repudiandae labore
-              a? Odit saepe sit nulla rerum expedita iste. Laborum, eius!
+              {quote?.quote}
             </p>
             
-            <p className="text-gray-300 text-center">by Lorem ipsum</p>
+            <p className="text-gray-300 text-center">
+              {quote?.author}
+            </p>
           </div>
         </div>
         {/* Footer */}
